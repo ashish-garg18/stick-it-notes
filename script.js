@@ -1,3 +1,8 @@
+if ('serviceWorker' in navigator) {
+    // register service worker
+    navigator.serviceWorker.register('service-worker.js');
+}
+
 let count = Number(window.localStorage.getItem("count"));
 if (!count) {
     window.localStorage.setItem("count", "0");
