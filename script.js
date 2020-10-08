@@ -1,8 +1,11 @@
-count = 0;
+let count = Number(window.localStorage.getItem("count"));
+if (!count) {
+    window.localStorage.setItem("count", "0");
+}
+window.localStorage.setItem("count", count);
 
 function createNote(noteTitle, noteBody) {
-    count ++;
-
+    
     document.getElementById("no-notes").classList.add("hidden");
 
     let li = document.createElement("li");
@@ -40,6 +43,15 @@ function createNoteFromInput(e) {
     document.getElementById("new-note-title-input").value = "";
     document.getElementById("new-note-body-input").value = "";
 
+    count ++;
+    window.localStorage.setItem("count", count);
+
+    while (window.localStorage.getItem(noteTitle)) {
+        noteTitle += " *";
+    }
+
+    window.localStorage.setItem(noteTitle, noteBody);
+
     createNote(noteTitle, noteBody);
 }
 
@@ -50,12 +62,23 @@ function removeItem(e) {
             let ul = document.getElementById("notes");
 
             ul.removeChild(li);
-            count --;
+            count--;
+            window.localStorage.setItem("count", count);
+
+            if (count < 1) {
+                document.getElementById("no-notes").className = "";
+            }
+            window.localStorage.removeItem(e.target.previousElementSibling.innerText);
         }
     }
+}
 
-    if(count < 1) {
-        document.getElementById("no-notes").className = "";
+for (i = 0; i < count + 1; i++) {
+    let noteTitle = window.localStorage.key(i);
+    let noteBody = window.localStorage.getItem(noteTitle);
+
+    if (noteTitle !== "count" && noteTitle) {
+        createNote(noteTitle, noteBody);
     }
 }
 
