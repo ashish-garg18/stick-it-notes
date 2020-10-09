@@ -1,4 +1,4 @@
 # stick-it-notes
 
 Check it out at
-https://epic-benz-86619f.netlify.app/
+https://bit.ly/2SD6Ih0
